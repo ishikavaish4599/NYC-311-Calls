@@ -1,0 +1,749 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "e542b865-8cde-4559-969f-a58149857d2e",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "# Load the dataset from the pickle file\n",
+    "df = pd.read_pickle('shared/Project-3_NYC_311_Calls.pkl')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "9dbeabcf-e2a6-4e9e-badf-3ea205c9675f",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unique Key</th>\n",
+       "      <th>Agency</th>\n",
+       "      <th>Agency Name</th>\n",
+       "      <th>Complaint Type</th>\n",
+       "      <th>Descriptor</th>\n",
+       "      <th>Location Type</th>\n",
+       "      <th>Incident Zip</th>\n",
+       "      <th>City</th>\n",
+       "      <th>Resolution Description</th>\n",
+       "      <th>Borough</th>\n",
+       "      <th>Open Data Channel Type</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Created Date</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184537</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>HEATING</td>\n",
+       "      <td>HEAT</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>10002.0</td>\n",
+       "      <td>NEW YORK</td>\n",
+       "      <td>More than one complaint was received for this ...</td>\n",
+       "      <td>MANHATTAN</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184538</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>GENERAL CONSTRUCTION</td>\n",
+       "      <td>WINDOWS</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>11236.0</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>The Department of Housing Preservation and Dev...</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184539</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>PAINT - PLASTER</td>\n",
+       "      <td>WALLS</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>10460.0</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>The Department of Housing Preservation and Dev...</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2022-07-08 11:14:43</th>\n",
+       "      <td>54732265</td>\n",
+       "      <td>DSNY</td>\n",
+       "      <td>Department of Sanitation</td>\n",
+       "      <td>Dirty Condition</td>\n",
+       "      <td>Trash</td>\n",
+       "      <td>Sidewalk</td>\n",
+       "      <td>10467.0</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>The Department of Sanitation investigated this...</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>PHONE</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184540</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>NONCONST</td>\n",
+       "      <td>VERMIN</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>10460.0</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>The Department of Housing Preservation and Dev...</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184532</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>HEATING</td>\n",
+       "      <td>HEAT</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>10468</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>The Department of Housing Preservation and Dev...</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184533</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>HEATING</td>\n",
+       "      <td>HEAT</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>10018</td>\n",
+       "      <td>NEW YORK</td>\n",
+       "      <td>More than one complaint was received for this ...</td>\n",
+       "      <td>MANHATTAN</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184534</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>GENERAL CONSTRUCTION</td>\n",
+       "      <td>STAIRS</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>10460</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>The Department of Housing Preservation and Dev...</td>\n",
+       "      <td>BRONX</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184535</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>GENERAL CONSTRUCTION</td>\n",
+       "      <td>GAS</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>11236</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>The Department of Housing Preservation and Dev...</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011-04-06 00:00:00</th>\n",
+       "      <td>20184536</td>\n",
+       "      <td>HPD</td>\n",
+       "      <td>Department of Housing Preservation and Develop...</td>\n",
+       "      <td>PLUMBING</td>\n",
+       "      <td>WATER-LEAKS</td>\n",
+       "      <td>RESIDENTIAL BUILDING</td>\n",
+       "      <td>11236</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>The Department of Housing Preservation and Dev...</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>UNKNOWN</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>33780977 rows × 11 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                     Unique Key Agency  \\\n",
+       "Created Date                             \n",
+       "2011-04-06 00:00:00    20184537    HPD   \n",
+       "2011-04-06 00:00:00    20184538    HPD   \n",
+       "2011-04-06 00:00:00    20184539    HPD   \n",
+       "2022-07-08 11:14:43    54732265   DSNY   \n",
+       "2011-04-06 00:00:00    20184540    HPD   \n",
+       "...                         ...    ...   \n",
+       "2011-04-06 00:00:00    20184532    HPD   \n",
+       "2011-04-06 00:00:00    20184533    HPD   \n",
+       "2011-04-06 00:00:00    20184534    HPD   \n",
+       "2011-04-06 00:00:00    20184535    HPD   \n",
+       "2011-04-06 00:00:00    20184536    HPD   \n",
+       "\n",
+       "                                                           Agency Name  \\\n",
+       "Created Date                                                             \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "2022-07-08 11:14:43                           Department of Sanitation   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "...                                                                ...   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "2011-04-06 00:00:00  Department of Housing Preservation and Develop...   \n",
+       "\n",
+       "                           Complaint Type   Descriptor         Location Type  \\\n",
+       "Created Date                                                                   \n",
+       "2011-04-06 00:00:00               HEATING         HEAT  RESIDENTIAL BUILDING   \n",
+       "2011-04-06 00:00:00  GENERAL CONSTRUCTION      WINDOWS  RESIDENTIAL BUILDING   \n",
+       "2011-04-06 00:00:00       PAINT - PLASTER        WALLS  RESIDENTIAL BUILDING   \n",
+       "2022-07-08 11:14:43       Dirty Condition        Trash              Sidewalk   \n",
+       "2011-04-06 00:00:00              NONCONST       VERMIN  RESIDENTIAL BUILDING   \n",
+       "...                                   ...          ...                   ...   \n",
+       "2011-04-06 00:00:00               HEATING         HEAT  RESIDENTIAL BUILDING   \n",
+       "2011-04-06 00:00:00               HEATING         HEAT  RESIDENTIAL BUILDING   \n",
+       "2011-04-06 00:00:00  GENERAL CONSTRUCTION       STAIRS  RESIDENTIAL BUILDING   \n",
+       "2011-04-06 00:00:00  GENERAL CONSTRUCTION          GAS  RESIDENTIAL BUILDING   \n",
+       "2011-04-06 00:00:00              PLUMBING  WATER-LEAKS  RESIDENTIAL BUILDING   \n",
+       "\n",
+       "                    Incident Zip      City  \\\n",
+       "Created Date                                 \n",
+       "2011-04-06 00:00:00      10002.0  NEW YORK   \n",
+       "2011-04-06 00:00:00      11236.0  BROOKLYN   \n",
+       "2011-04-06 00:00:00      10460.0     BRONX   \n",
+       "2022-07-08 11:14:43      10467.0     BRONX   \n",
+       "2011-04-06 00:00:00      10460.0     BRONX   \n",
+       "...                          ...       ...   \n",
+       "2011-04-06 00:00:00        10468     BRONX   \n",
+       "2011-04-06 00:00:00        10018  NEW YORK   \n",
+       "2011-04-06 00:00:00        10460     BRONX   \n",
+       "2011-04-06 00:00:00        11236  BROOKLYN   \n",
+       "2011-04-06 00:00:00        11236  BROOKLYN   \n",
+       "\n",
+       "                                                Resolution Description  \\\n",
+       "Created Date                                                             \n",
+       "2011-04-06 00:00:00  More than one complaint was received for this ...   \n",
+       "2011-04-06 00:00:00  The Department of Housing Preservation and Dev...   \n",
+       "2011-04-06 00:00:00  The Department of Housing Preservation and Dev...   \n",
+       "2022-07-08 11:14:43  The Department of Sanitation investigated this...   \n",
+       "2011-04-06 00:00:00  The Department of Housing Preservation and Dev...   \n",
+       "...                                                                ...   \n",
+       "2011-04-06 00:00:00  The Department of Housing Preservation and Dev...   \n",
+       "2011-04-06 00:00:00  More than one complaint was received for this ...   \n",
+       "2011-04-06 00:00:00  The Department of Housing Preservation and Dev...   \n",
+       "2011-04-06 00:00:00  The Department of Housing Preservation and Dev...   \n",
+       "2011-04-06 00:00:00  The Department of Housing Preservation and Dev...   \n",
+       "\n",
+       "                       Borough Open Data Channel Type  \n",
+       "Created Date                                           \n",
+       "2011-04-06 00:00:00  MANHATTAN                UNKNOWN  \n",
+       "2011-04-06 00:00:00   BROOKLYN                UNKNOWN  \n",
+       "2011-04-06 00:00:00      BRONX                UNKNOWN  \n",
+       "2022-07-08 11:14:43      BRONX                  PHONE  \n",
+       "2011-04-06 00:00:00      BRONX                UNKNOWN  \n",
+       "...                        ...                    ...  \n",
+       "2011-04-06 00:00:00      BRONX                UNKNOWN  \n",
+       "2011-04-06 00:00:00  MANHATTAN                UNKNOWN  \n",
+       "2011-04-06 00:00:00      BRONX                UNKNOWN  \n",
+       "2011-04-06 00:00:00   BROOKLYN                UNKNOWN  \n",
+       "2011-04-06 00:00:00   BROOKLYN                UNKNOWN  \n",
+       "\n",
+       "[33780977 rows x 11 columns]"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = df.set_index(pd.DatetimeIndex(df['Created Date']))\n",
+    "del df['Created Date']\n",
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "8987ab9f-223b-4946-a6b7-30bc33f83357",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# Convert object columns to category type for efficiency\n",
+    "categorical_columns = ['Agency', 'Agency Name', 'Complaint Type', 'Descriptor', \n",
+    "                       'Location Type', 'Incident Zip', 'City', 'Borough', \n",
+    "                       'Open Data Channel Type']\n",
+    "\n",
+    "for col in categorical_columns:\n",
+    "    df[col] = df[col].astype('category')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "bb1ad8de-c959-4848-b3e6-03674498acb6",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# Split the data by year\n",
+    "years = df.index.year.unique()\n",
+    "yearly_dfs = {year: df[df.index.year == year] for year in years}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "45141303-0c40-46f2-8142-02cb4e7d928d",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "for year, yearly_df in yearly_dfs.items():\n",
+    "    yearly_df.to_pickle(f'NYC_311_Calls_{year}.pkl')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0ebdaffb-75cf-4a9e-adf1-49d21db126c4",
+   "metadata": {},
+   "source": [
+    "Question 1 -"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "01aba62a-83b3-4152-9ca9-a3d1d05e49aa",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Average number of daily complaints in 2022: 8684.320547945206\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Load the dataset for the year 2022\n",
+    "df_2022 = pd.read_pickle('NYC_311_Calls_2022.pkl')\n",
+    "\n",
+    "# Ensure the index is in datetime format\n",
+    "df_2022.index = pd.to_datetime(df_2022.index)\n",
+    "\n",
+    "# Resample the data to get daily counts for 2022\n",
+    "daily_complaints_2022 = df_2022['Unique Key'].resample('D').count()\n",
+    "\n",
+    "# Calculate the average number of daily complaints in 2022\n",
+    "average_daily_complaints_2022 = daily_complaints_2022.mean()\n",
+    "print(f\"Average number of daily complaints in 2022: {average_daily_complaints_2022}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dd7711a8-8c25-47a1-b5d8-f04c7763aa35",
+   "metadata": {},
+   "source": [
+    "Question 2 -"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "30b7cc97-2b07-477d-9c6a-4ee4e2ea744a",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "In 2010, the maximum number of calls (10458) were received on: 2010-03-15\n",
+      "In 2011, the maximum number of calls (9563) were received on: 2011-08-29\n",
+      "In 2012, the maximum number of calls (10027) were received on: 2012-01-04\n",
+      "In 2013, the maximum number of calls (11776) were received on: 2013-01-24\n",
+      "In 2014, the maximum number of calls (11325) were received on: 2014-01-07\n",
+      "In 2015, the maximum number of calls (11531) were received on: 2015-01-08\n",
+      "In 2016, the maximum number of calls (12089) were received on: 2016-01-05\n",
+      "In 2017, the maximum number of calls (11070) were received on: 2017-12-28\n",
+      "In 2018, the maximum number of calls (11595) were received on: 2018-01-02\n",
+      "In 2019, the maximum number of calls (11533) were received on: 2019-01-31\n",
+      "In 2020, the maximum number of calls (24415) were received on: 2020-08-04\n",
+      "In 2021, the maximum number of calls (15205) were received on: 2021-09-02\n",
+      "In 2022, the maximum number of calls (13095) were received on: 2022-08-22\n",
+      "In 2023, the maximum number of calls (11625) were received on: 2023-07-05\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Define the range of years you have data for\n",
+    "start_year = 2010  # Adjust this to your actual start year\n",
+    "end_year = 2023    # Adjust this to your actual end year\n",
+    "\n",
+    "# Loop through each year and find the date with the maximum calls\n",
+    "for year in range(start_year, end_year + 1):\n",
+    "    # Load the dataset for the year\n",
+    "    df = pd.read_pickle(f'NYC_311_Calls_{year}.pkl')\n",
+    "\n",
+    "    # Convert the index to datetime if it's not already\n",
+    "    df.index = pd.to_datetime(df.index)\n",
+    "\n",
+    "    # Resample to get daily counts\n",
+    "    daily_counts = df['Unique Key'].resample('D').count()\n",
+    "\n",
+    "    # Find the date with the maximum number of calls for this year\n",
+    "    max_calls_date = daily_counts.idxmax()\n",
+    "    max_calls = daily_counts.max()\n",
+    "\n",
+    "    print(f\"In {year}, the maximum number of calls ({max_calls}) were received on: {max_calls_date.date()}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "50a11150-f95c-42db-b239-11f3aaf99d26",
+   "metadata": {},
+   "source": [
+    "Question 3 -"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "e1fae04a-94e2-4544-955e-c3cd94db7b64",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "On August 4, 2020, the most frequent complaint type was 'Damaged Tree' with 14863 calls.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Load the dataset for the year 2020\n",
+    "df_2020 = pd.read_pickle('NYC_311_Calls_2020.pkl')\n",
+    "\n",
+    "# Convert the index to datetime if it's not already\n",
+    "df_2020.index = pd.to_datetime(df_2020.index)\n",
+    "\n",
+    "# Filter the DataFrame for August 4, 2020\n",
+    "df_max_calls = df_2020[df_2020.index.date == pd.to_datetime('2020-08-04').date()]\n",
+    "\n",
+    "# Count the frequency of each complaint type on that day\n",
+    "complaint_counts = df_max_calls['Complaint Type'].value_counts()\n",
+    "\n",
+    "# Find the most frequent complaint type\n",
+    "most_frequent_complaint = complaint_counts.idxmax()\n",
+    "most_frequent_count = complaint_counts.max()\n",
+    "\n",
+    "print(f\"On August 4, 2020, the most frequent complaint type was '{most_frequent_complaint}' with {most_frequent_count} calls.\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "778b5c41-a276-4f12-919b-0e31b9fecb53",
+   "metadata": {},
+   "source": [
+    "Question 4 -"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "1ed8a308-5dbb-4285-91ad-947503f7a825",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The quietest month historically is December with 2596986 calls.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Define the range of years you have data for\n",
+    "start_year = 2010  # Adjust this to your actual start year\n",
+    "end_year = 2023    # Adjust this to your actual end year\n",
+    "\n",
+    "# List to store dataframes\n",
+    "dfs = []\n",
+    "\n",
+    "# Load each yearly dataset and append to the list\n",
+    "for year in range(start_year, end_year + 1):\n",
+    "    df_year = pd.read_pickle(f'NYC_311_Calls_{year}.pkl')\n",
+    "    dfs.append(df_year)\n",
+    "\n",
+    "# Concatenate all DataFrames into one\n",
+    "df_all = pd.concat(dfs)\n",
+    "\n",
+    "# Ensure the index is in datetime format\n",
+    "df_all.index = pd.to_datetime(df_all.index)\n",
+    "\n",
+    "# Group by month (ignoring the year) and count the number of calls\n",
+    "monthly_calls = df_all.groupby(df_all.index.month).size()\n",
+    "\n",
+    "# Find the month with the fewest calls\n",
+    "quietest_month = monthly_calls.idxmin()\n",
+    "quietest_calls = monthly_calls.min()\n",
+    "\n",
+    "# Printing the result\n",
+    "months = {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June',\n",
+    "          7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'}\n",
+    "print(f\"The quietest month historically is {months[quietest_month]} with {quietest_calls} calls.\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b633ede0-eca9-48b8-8c4c-b70122739b6b",
+   "metadata": {},
+   "source": [
+    "Question 5 -"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "d4cccbea-d995-4b75-a74a-39061600cfdd",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The seasonal component value on 2020-12-25 (rounded to the nearest integer) is: 183\n"
+     ]
+    }
+   ],
+   "source": [
+    "from statsmodels.tsa.seasonal import seasonal_decompose\n",
+    "\n",
+    "# Resample the data to get daily counts\n",
+    "daily_counts = df_all['Unique Key'].resample('D').count()\n",
+    "\n",
+    "# Perform ETS decomposition\n",
+    "decomposition = seasonal_decompose(daily_counts, model='additive')\n",
+    "\n",
+    "# Get the seasonal component\n",
+    "seasonal = decomposition.seasonal\n",
+    "\n",
+    "# Find the seasonal component value for December 25, 2020\n",
+    "seasonal_value = seasonal.loc['2020-12-25']\n",
+    "\n",
+    "# Print the rounded value\n",
+    "rounded_value = round(seasonal_value)\n",
+    "print(f\"The seasonal component value on 2020-12-25 (rounded to the nearest integer) is: {rounded_value}\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ca23a5d5-15a7-469c-8b8f-27c587d82c75",
+   "metadata": {},
+   "source": [
+    "Question 6 -"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "275d8754-ffb8-4bcf-86df-3d2d629668a4",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Autocorrelation of daily calls with a lag of 1 day: 0.7517059728398577\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Resample the data to get daily counts\n",
+    "daily_counts = df_all['Unique Key'].resample('D').count()\n",
+    "\n",
+    "# Calculate the autocorrelation with a lag of 1 day\n",
+    "autocorrelation_lag_1 = daily_counts.autocorr(lag=1)\n",
+    "\n",
+    "print(f\"Autocorrelation of daily calls with a lag of 1 day: {autocorrelation_lag_1}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "430a3be6-6cf0-4e22-a98f-b9cf6c705647",
+   "metadata": {},
+   "source": [
+    "Question 7 -"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "48949e5b-2859-4a2f-879c-3aa9b6be68ba",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "17:08:01 - cmdstanpy - INFO - Chain [1] start processing\n",
+      "17:08:02 - cmdstanpy - INFO - Chain [1] done processing\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "RMSE on the test set: 1231.513760758433\n"
+     ]
+    }
+   ],
+   "source": [
+    "from prophet import Prophet\n",
+    "from prophet.diagnostics import performance_metrics\n",
+    "from sklearn.metrics import mean_squared_error\n",
+    "from math import sqrt\n",
+    "\n",
+    "daily_counts = df_all['Unique Key'].resample('D').count()\n",
+    "\n",
+    "# Prepare the DataFrame for Prophet\n",
+    "df_prophet = pd.DataFrame({'ds': daily_counts.index, 'y': daily_counts.values})\n",
+    "\n",
+    "# Split into training and test sets (last 90 days as test)\n",
+    "test_size = 90\n",
+    "train_df = df_prophet[:-test_size]\n",
+    "test_df = df_prophet[-test_size:]\n",
+    "\n",
+    "# Create and fit the Prophet model\n",
+    "model = Prophet()\n",
+    "model.fit(train_df)\n",
+    "\n",
+    "# Make predictions on the test set\n",
+    "future = model.make_future_dataframe(periods=test_size)\n",
+    "forecast = model.predict(future)\n",
+    "\n",
+    "# Extract predicted values and actual values for the test set\n",
+    "predictions = forecast['yhat'][-test_size:]\n",
+    "actuals = test_df['y']\n",
+    "\n",
+    "# Calculate RMSE\n",
+    "rmse = sqrt(mean_squared_error(actuals, predictions))\n",
+    "print(f\"RMSE on the test set: {rmse}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "140da219-944f-4379-af79-673fb0ab5273",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:mggy8413]",
+   "language": "python",
+   "name": "conda-env-mggy8413-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
